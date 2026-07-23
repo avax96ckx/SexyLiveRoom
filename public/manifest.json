@@ -1,0 +1,55 @@
+{
+  "name": "SEXY ROOM PRO",
+  "short_name": "SEXY ROOM PRO",
+  "description": "Jukwaa la burudani la watu wazima - Video calls, Live Rooms, na zaidi!",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "theme_color": "#FF1493",
+  "background_color": "#0a030f",
+  "categories": ["entertainment", "social"],
+  "lang": "sw",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "SEXY LIVE ROOM - Desktop"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "SexyRoom",
+      "short_name": "SexyRoom",
+      "description": "Ingia SexyRoom moja kwa moja",
+      "url": "/sexyroom",
+      "icons": [{"src": "/icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "Malaya",
+      "short_name": "Malaya",
+      "description": "Angalia Malaya",
+      "url": "/malaya",
+      "icons": [{"src": "/icon-192.png", "sizes": "192x192"}]
+    }
+  ]
+}

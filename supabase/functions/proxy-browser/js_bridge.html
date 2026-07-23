@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test page for MoMi JS Bridge</title>
+    <style>
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <table>
+            <tr>
+                <td>
+                    Does `window.momiBridge` exist?
+                </td>
+                <td id="momiBridge.exists"></td>
+            </tr>
+            <tr>
+                <td>
+                    Does `window.momi` exist?
+                </td>
+                <td id="momi.exists"></td>
+            </tr>
+            <tr>
+                <td>
+                    `window.momi.isDefaultBrowser`
+                </td>
+                <td id="momi.isDefaultBrowser"></td>
+            </tr>
+            <tr>
+                <td>
+                    `window.momi.getClientName`
+                </td>
+                <td id="momi.getClientName"></td>
+            </tr>
+            <tr>
+                <td>
+                    `window.momi.getClientLocalization`
+                </td>
+                <td id="momi.getClientLocalization"></td>
+            </tr>
+            <tr>
+                <td>
+                    `window.momi.getClientVersion`
+                </td>
+                <td id="momi.getClientVersion"></td>
+            </tr>
+            <tr>
+                <td>
+                    `window.momi.getAccessToken(false)`
+                </td>
+                <td id="momi.getAccessToken"></td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="refreshAccessToken()">`window.momi.getAccessToken(true)`</button>
+                </td>
+                <td id="momi.refreshAccessToken"></td>
+            </tr>
+            <tr>
+                <td>
+                    <button
+                        onclick="openNativeScreen('redeem_points')">`window.momi.openNativeScreen('redeem_points')`</button>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <button
+                            onclick="openNativeScreen('earn_rewards')">`window.momi.openNativeScreen('earn_rewards')`</button>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <button
+                        onclick="openDefaultBrowserDialog()">`window.momi.openDefaultBrowserDialog()`</button>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </main>
+    <script>
+        window.onload = initialize;
+
+        const momiDefined = () => typeof window.momi !== "undefined";
+
+        function initialize() {
+            onMomiLoaded(function () {
+                let momiBridgeExists = typeof window.momiBridge !== "undefined";
+                document.getElementById("momiBridge.exists").innerHTML = momiBridgeExists ? "Yes" : "No";
+
+                let momiExists = momiDefined();
+                document.getElementById("momi.exists").innerHTML = momiExists ? "Yes" : "No";
+
+                if (momiExists) {
+                    window.momi.isDefaultBrowser().then((res) => {
+                        document.getElementById("momi.isDefaultBrowser").innerHTML = res;
+                    });
+                    window.momi.getAccessToken(false).then((res) => {
+                        document.getElementById("momi.getAccessToken").innerHTML = res;
+                    });
+                    window.momi.getClientName().then((res) => {
+                        document.getElementById("momi.getClientName").innerHTML = res;
+                    });
+                    window.momi.getClientLocalization().then((res) => {
+                        document.getElementById("momi.getClientLocalization").innerHTML = res;
+                    });
+                    window.momi.getClientVersion().then((res) => {
+                        document.getElementById("momi.getClientVersion").innerHTML = res;
+                    });
+                }
+            });
+        }
+
+        function refreshAccessToken() {
+            if (momiDefined()) {
+                window.momi.getAccessToken(true)
+                    .then((res) => {
+                        document.getElementById("momi.refreshAccessToken").innerHTML = res;
+                    })
+                    .catch((err) => {
+                        document.getElementById("momi.refreshAccessToken").innerHTML = JSON.stringify(err);
+                    });
+            }
+        }
+
+        function openNativeScreen(screenName) {
+            if (momiDefined()) {
+                window.momi.openNativeScreen(screenName);
+            }
+        }
+
+        function onMomiLoaded(callback) {
+            if (momiDefined()) {
+                callback();
+            } else {
+                window.addEventListener(
+                    "momi.loaded",
+                    (e) => {
+                        callback();
+                    },
+                    true
+                );
+            }
+        }
+
+
+        function openDefaultBrowserDialog() {
+            if (momiDefined()) {
+                window.momi.openDefaultBrowserDialog();
+            }
+        }
+    </script>
+</body>
+
+</html>
